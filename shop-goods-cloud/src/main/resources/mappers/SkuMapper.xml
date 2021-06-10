@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.shop.api.goods.mapper.SkuMapper">
+
+    <select id="finSkuListByWhere" resultType="com.fh.shop.goods.po.Sku">
+    select tk.id,tk.price,tk.image,tk.skuname from t_sku tk join t_spu tp on
+    tk.spuid=tp.id where tp.statues=1 and tp.degree=1 and tp.recommend=1
+</select>
+
+
+
+</mapper>

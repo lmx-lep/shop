@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div style="color:red">该账号未激活,请<button  onclick="toActive()">激活账号!</button></div>
+</body>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/jquery.cookie.min.js"></script>
+<script src="../js/common/url.js"></script>
+<script>
+
+    function toActive(){
+          var v_param=$.cookie("res");
+        var v_params=eval('('+v_param+')');
+           $.ajax({
+              type:"post",
+              data:v_params,
+              url:server_url+"/mem/active",
+            success:function(rest){
+                console.log(rest)
+            }
+        })
+    }
+</script>
+
+</html>

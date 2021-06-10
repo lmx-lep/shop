@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通过邮箱找回密码</title>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/pages-JD-index.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-jquery.autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-cartPanelView.css" />
+
+</head>
+<body>
+<!--列表-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="serach_from">
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">邮箱:</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control"  id="mail"  placeholder="请输入邮箱" onblur="checkMail(this.value)"  >
+                            </div>
+                            <div id="mailTip">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">验证码:</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" placeholder="验证码" id="code" autocomplete="off" autocomplete="off" >
+                            </div>
+                            <label id="imgDiv">
+                                <!--<img alt="321" src="" onclick="createImage()">-->
+                            </label>
+                        </div>
+                        <div class="center">
+                        <button type="button" class="btn btn-success"  onclick="findPassword();"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>确定</button>
+                        <button type="reset" class="btn btn-danger" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/shop/js/pages/index.js"></script>
+<script src="../js/jquery.cookie.min.js"></script>
+<script src="../js/common/url.js"></script>
+<script>
+    
+    $(function (){
+        createImage();
+    })
+    function createImage(){
+    var v_key=$.cookie("key");
+        $.ajax({
+            type:"get",
+           url:server_url+"/createImage",
+           data:{"key":v_key},
+           success:function (rest){
+           if (rest.code==200){
+            var v_html='<img src="data:image/jpg;base64,'+rest.data.code+'" onclick="createImage()"/>'
+               $("#imgDiv").html(v_html);
+              $.cookie("key",rest.data.key);
+            }
+      }
+        })
+    }
+    function findPassword(){
+        var v_param={};
+            v_param.mail=$("#mail").val();
+            v_param.code=$("#code").val();
+            v_param.key=$.cookie("key");
+            $.ajax({
+                type:"post",
+                url:server_url+"/mem/findPassword",
+                data:v_param,
+                success:function (rest) {
+                    if(rest.code==200){
+                        location.href="login.html";
+                    }else {
+                        alert(rest.msg);
+                    }
+                }
+            })
+
+
+
+
+    }
+</script>
+</body>
+</html>

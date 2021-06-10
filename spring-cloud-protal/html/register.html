@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>用户注册</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="../js/shop/assets/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/pages-JD-index.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-jquery.autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-cartPanelView.css" />
+</head>
+<body>
+<script src="../js/common/url.js"></script>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/shop/js/pages/index.js">
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">会员名:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="memberName" onblur="memBer()" >
+                    <div id="nameDiv" style="color: red">
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">密码:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="password"  >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">确认密码:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="realPassword"  >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">昵称:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="nickName"  >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">邮箱:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="mail"  onblur="checkMail()"  >
+                        <div id="mailDiv" style="color: red"></div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">手机号:</label>
+                    <div class="col-sm-4">
+                      <div class="input-group" >
+                              <input type="text" class="form-control" id="phone" onblur="checkPhone()">
+                         <span class="input-group-btn">
+                          <button type="button" class="btn btn-primary"  onclick="ser(this)" id="getCode">点击获取验证码</button>
+                         </span>
+                     </div>
+                        <div id="phoneDiv" style="color: red"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">验证码: </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="message"  >
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" id="sum" onclick="add()">提交</button>
+                    <button type="reset" class="btn btn-default"  onclick="rest()" >重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function rest() {
+        $("#phoneDiv").html("");
+        $("#mailDiv").html("");
+        $("#nameDiv").html("");
+    }
+    var stu=0;
+    function check(){
+        if(stu!=0){
+          $("#sum").attr("disabled","disabled")
+        }else {
+            $("#sum").removeAttr("disabled","disabled")
+        }
+    }
+
+    function memBer(){
+     var v_memberName= $("#memberName").val();
+        $.ajax({
+            type:"post",
+            url:server_url+"/mem/checkMember",
+            data:{"memberName":v_memberName},
+             success:function (rest){
+                 if (rest.code!=200){
+                   $("#nameDiv").html(rest.msg);
+                     stu++;
+                     check();
+                 }else {
+                     $("#nameDiv").html("");
+                     stu=0;
+                     check();
+                 }
+             }
+        })
+    }
+    function checkPhone() {
+        var v_phone= $("#phone").val();
+        $.ajax({
+            type:"post",
+            url:server_url+"/mem/checkPhone",
+            data:{"phone":v_phone},
+            success:function (rest){
+                if (rest.code!=200){
+                    $("#phoneDiv").html(rest.msg);
+                    stu++;
+                    check();
+                }else {
+                    $("#phoneDiv").html("");
+                    stu=0;
+                    check();
+                }
+            }
+        })
+    }
+    function checkMail() {
+        var mail= $("#mail").val();
+        $.ajax({
+            type:"post",
+            url:server_url+"/mem/checkMail",
+            data:{"mail":mail},
+            success:function (rest){
+                if (rest.code!=200){
+                    $("#mailDiv").html(rest.msg);
+                    stu++;
+                    check();
+                }else {
+                    $("#mailDiv").html("");
+                    stu=0;
+                    check();
+                }
+            }
+        })
+    }
+    //发送验证码
+    function ser(){
+        checkPhone();
+        if (stu!=0){
+            return;
+        }
+        var v_phone= $("#phone").val();
+        if(v_phone==null || v_phone==""){
+          return;
+        }
+        timeout();
+        // var phone=  $("#phone").val();
+        // $.ajax({
+        //     type:"post",
+        //     // url:server_url+"/mem/code",
+        //     data:{"phone":phone},
+        //     success:function (rest) {
+        //         console.log(rest);
+        //         if (rest.code == 200) {
+        //             alert("验证码已经发送到你的手机，请注意查收！");
+        //         }
+        //         {
+        //             alert("发送异常");
+        //         }
+        //     }
+        // })
+    }
+    var time=6;
+    function timeout(){
+        time--;
+        $("#getCode").html("重新发送("+time+"s)");
+        $("#getCode").attr("disabled","disabled");
+       if (time==0){
+           $("#getCode").html("发送验证码");
+           $("#getCode").removeAttr("disabled","disabled");
+           time=6;
+           return;
+        }
+        setTimeout(function () {
+            timeout();
+        },1000)
+    }
+    
+    //新增 注册
+    var count;
+    function add(){
+          count=0;
+        var v_param = {};
+        var password=$("#password").val();
+        var realPassword=$("#realPassword").val();
+        var phone=$("#phone").val();
+        var mail=$("#mail").val();
+        var memberName=$("#memberName").val();
+        var nickName=$("#nickName").val();
+        var message=$("#message").val();
+        v_param.phone=phone;
+        v_param.mail=mail;
+        v_param.password=password;
+        v_param.realPassword=realPassword;
+        v_param.memberName=memberName;
+        v_param.nickName=nickName;
+        v_param.message=message
+        if (password==null || password ==""
+        || realPassword==null || realPassword ==""
+        || phone==null || phone ==""
+        || memberName==null || memberName ==""
+        || mail==null || mail ==""
+        || message==null || message ==""
+        || nickName==null || nickName ==""){
+           alert("参数为空");
+            count++;
+        }
+        if (count==0){
+            if (checkEmail(mail)==false){
+                alert("邮箱格式不正确");
+            }
+            if (checkMobile(phone)==false){
+                alert("手机号格式不正确");
+            }
+        }
+        $.ajax({
+            type:"post",
+            url:server_url+"/mem/reg",
+            data:v_param,
+            success:function (res) {
+                if (res.code == 200) {
+                   location.href="login.html";
+                }else {
+                    if (count==0){
+                        alert(res.msg);
+                    }
+                }
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 验证手机号码
+    // 验证规则：11位数字，以1开头。
+function checkMobile(str) {
+        var
+            re = /^1\d{10}$/
+
+        if (re.test(str)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+//     验证邮箱
+//     验证规则：姑且把邮箱地址分成“第一部分@第二部分”这样
+//     第一部分：由字母、数字、下划线、短线“-”、点号“.”组成，
+// 第二部分：为一个域名，域名由字母、数字、短线“-”、域名后缀组成，
+// 而域名后缀一般为.xxx或.xxx.xx，一区的域名后缀一般为2-4位，如cn,com,net，现在域名有的也会大于4位
+
+ function checkEmail(str){
+
+     var  re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+        if(re.test(str)){
+           return true;
+        }else{
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

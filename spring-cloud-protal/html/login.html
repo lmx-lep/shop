@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>电商后台管理</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="../js/css/style.css" />
+</head>
+<body>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/jquery.cookie.min.js"></script>
+<script src="../js/common/url.js"></script>
+    <div class="container">
+        <div class="main">
+            <div class="bg"></div>
+            <form class="formone" action="/" method="get">
+                <div class="title">My forms</div>
+                <div class="username"><input type="text"  id="name" v-model="username"  placeholder="请输入账号" /></div>
+                <div class="password"><input type="password"  v-model="password" id="userPassword" placeholder="请输入密码" /></div>
+                <div class="verification">是否验证？</div>
+                <div class="loginbtn">
+                    <div onclick="dl()" class="btnbg">登录</div><button   type="button">登录</button>
+                </div>
+                <div class="registerbtn">
+                    <button type="button" onclick="findPassword()">忘记密码</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    let formone=document.querySelector('.formone');
+    let registerpage=document.querySelector('.registerpage');
+    let registerbtn=document.querySelector('.registerbtn');
+    let resetbtn=document.querySelector('.resetbtn');
+    registerbtn.addEventListener("click",()=>{
+        formone.style.display='none';
+    registerpage.style.display="flex";
+    })
+    // resetbtn.addEventListener("click",()=>{
+    //     formone.style.display='flex';
+    // registerpage.style.display="none";
+    // })
+    //登录
+    function dl() {
+        var v_name=$("#name").val();
+        var v_password=$("#userPassword").val();
+        $.ajax({
+            url: server_member+"mem/login",
+            data: {"memberName": v_name,"password":v_password},
+            type: "post",
+            success: function (result1){
+                if (result1.code == 200){
+                var v_cookie=result1.data
+                  //  把请求头放到cookie中
+                  $.cookie("v_cookie",v_cookie);
+                    location.href="index.html";
+                }else if (result1.code == 1002){
+                    location.href="register.html";
+                } else {
+                    var v_cookie=result1.data;
+                    console.log(v_cookie);
+                    $.cookie("res",v_cookie);
+                    location.href="toActive.html";
+                }
+
+            }
+        })
+    }
+
+    function findPassword(){
+            location.href="pw.html";
+    }
+
+</script>
+</html>

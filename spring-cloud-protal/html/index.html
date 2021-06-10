@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="../js/shop/assets/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/pages-JD-index.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-jquery.autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-cartPanelView.css" />
+    <title>商城首页</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">飞狐小卖部</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a id="memberDiv"></a></li>
+                <li><a  id="changeStu"></a></li>
+                <li><a  id="changeCart"></a></li>
+            </ul>
+        </div><!-- /.navbar-collapse --><!-- /.container-fluid -->
+    </div>
+</nav>
+<div id="nav-bottom">
+    <!--顶部-->
+    <div class="nav-top">
+        <!--头部-->
+        <div class="header">
+            <div class="py-container">
+                <div class="yui3-g NavList">
+                    <div class="yui3-u Left all-sort">
+                            <h4>全部商品分类</h4>
+                    </div>
+                    <div class="yui3-u Center navArea" id="cate1">
+                        <ul class="nav">
+                            <li class="f-item">服装城</li>
+                            <li class="f-item">美妆馆</li>
+                            <li class="f-item">品优超市</li>
+                            <li class="f-item">全球购</li>
+                            <li class="f-item">闪购</li>
+                            <li class="f-item">团购</li>
+                            <li class="f-item">有趣</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--列表-->
+<div class="sort">
+    <div class="py-container">
+        <div class="yui3-g SortList ">
+            <div class="yui3-u Left all-sort-list">
+                <div class="all-sort-list2" id="cateDiv">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--暂时没有用-->
+<div class="container">
+
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">商品列表</div>
+                <div class="panel-body" id="productListDiv">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">热销品牌</div>
+                <div class="panel-body" id="brandListDiv">
+                    <div class="sl-value">
+                        <div class="clr"></div>
+                        <div class="sl-v-logos">
+                            <ul class="J_valueList v-fixed">
+                                <li id="brand-18374" data-initial="X" style="display:block;">
+                                    <a href="/list.html?cat=9987%2C653%2C655&amp;ev=exbrand_%E5%B0%8F%E7%B1%B3%EF%BC%88MI%EF%BC%89%5E&amp;cid3=655" rel="nofollow" onclick="searchlog(1,0,18374,71,'品牌::小米（MI）')" title="小米（MI）">
+                                        <i></i>
+                                        <img src="//img30.360buyimg.com/popshop/jfs/t1/156162/32/19961/2016/606c2f5fE0926fcbc/f74c5dc87e89fdd4.png" width="102" height="36">
+                                        小米（MI）
+                                    </a>
+                                </li>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sl-b-selected J_brandSelected"><span class="sl-b-key">已选条件：</span><ul class="sl-v-list brand-selected"></ul></div>
+                        <div class="sl-btns">
+                            <a class="btn btn-primary J_btnsConfirm disabled" href="javascript:;">确定</a>
+                            <a class="btn btn-default J_btnsCancel" href="javascript:;">取消</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="skuDiv" style="display: none">
+    <div class=" col-md-4">
+        <div class="thumbnail">
+            <img src="##image##" >
+            <div class="caption">
+                <h3 style="color:#ff3d35">￥##price##</h3>
+                <p>##skuName##</p>
+                <p><a href="#" class="btn btn-primary"  role="button" onclick="addCart('##id##')">添加购物车</a> <a href="#" class="btn btn-default" role="button">不感兴趣</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/shop/js/pages/index.js"></script>
+<script src="../js/jquery.cookie.min.js"></script>
+<script src="../js/common/url.js"></script>
+<script>
+    $(function () {
+
+        initFindLogin();
+        initCate();
+        initSku();
+    })
+    function initFindLogin(){
+        $.ajax({
+            type:"get",
+            url:server_member+"mem/loginFind",
+            beforeSend:function(xhr){
+                var v_cookie=$.cookie("v_cookie");
+                xhr.setRequestHeader("x-auth",v_cookie);
+            },
+            success:function (res){
+                console.log(res)
+                if (res.code==200){
+                  console.log(res);
+                        $("#memberDiv").html('欢迎您,亲爱的vip用户:'+res.data.nickName+'');
+                        $("#changeStu").html('<a onclick="deleteLog()">退出</a>&nbsp;&nbsp;' + '&nbsp;<a onclick="updatePassword()">修改密码</a>');
+
+                    let count = res.data.count?res.data.count:0;
+                    $("#changeCart").html('<a onclick="toCart()">购物车('+ count+')</a>');
+                }else {
+                    $("#memberDiv").html('<a href="login.html">您好,请登录</a>');
+                    $("#changeStu").html('<a href="register.html">注册</a>');
+                }
+            }
+        })
+
+    }
+    function toCart(){
+        location.href="cart.html";
+    }
+    function addCart(skuId){
+        var  v_param={};
+        v_param.count=1;
+        v_param.skuId=skuId;
+        $.ajax({
+            type:"post",
+            data:v_param,
+            url:server_cart+"/cart",
+            beforeSend:function(xhr){
+                var v_cookie=$.cookie("v_cookie");
+                xhr.setRequestHeader("x-auth",v_cookie);
+            },
+            success:function (res){
+                if (res.code==200){
+                    initFindLogin();
+                    // alert("成功加入购物车,请尽快结算!")
+                }if (res.code==4003){
+                    alert("限购")
+                }
+            }
+        })
+    }
+    function updatePassword(){
+        location.href="updatePassword.html"
+    }
+    //  删除request 注销
+    function deleteLog(){
+        $.ajax({
+            type:"get",
+            url:server_member+"mem/deleteLog",
+            beforeSend:function(xhr){
+                var v_cookie=$.cookie("v_cookie");
+                xhr.setRequestHeader("x-auth",v_cookie);
+            },
+            success:function (res){
+                console.log(res)
+                if (res.code==200 || res.code==3012){
+                  location.href="";
+                }
+            }
+        })
+    }
+    function initSku(){
+        $.ajax({
+            url:server_goods+"/skus",
+            type:"get",
+            //设置ajax 请求头
+            success:function (res) {
+    if (res.code==200){
+        var skuList=res.data;
+        // var v_skuHtml="";
+        // for (let sku of skuList) {
+        //     v_skuHtml+='  <div class="col-sm-4 ">\n' +
+        //         '<div class="thumbnail">\n' +
+        //         '<img src="'+'http://localhost:8080'+sku.image+'" alt="...">\n' +
+        //         '<div class="caption">\n' +
+        //         '<h3 style="color:#ff3d35">￥'+sku.price+'</h3>\n' +
+        //         '<p >'+sku.skuName+'</p>\n' +
+        //         ' <p><a href="#" class="btn btn-primary" role="button">不感兴趣</a> <a href="#" class="btn btn-default" role="button" style="color:skyblue">加入购物车</a></p>\n' +
+        //         '</div>\n' +
+        //         '</div>\n' +
+        //         '</div>';
+        // }S
+        //  $("#productListDiv").html(v_skuHtml);
+        for (let sku of skuList) {
+         var v_skuDiv=$("#skuDiv").html();
+         var resHtml= v_skuDiv.replace(/##image##/g,sku.image)
+                    .replace(/##price##/g,sku.price)
+                    .replace(/##skuName##/g,sku.skuName)
+                    .replace(/##id##/g,sku.id)
+            $("#productListDiv").append(resHtml);
+        }
+                }
+            }
+        })
+    }
+    var v_html='';
+    var v_cateList="";
+    function initCate() {
+        $("#memberDiv").html('<a href="login.html">您好,请登录</a>');
+        $("#changeStu").html('<a href="register.html">注册</a>');
+        $.ajax({
+            type:"get",
+            url:server_cate+"/cates",
+            success:function (result) {
+                if (result.code==200){
+                    v_cateList=  result.data;
+                    buildCate();
+                    $("#cateDiv").html(v_html);
+                    initCss();
+                }
+            }
+        })
+    }
+    function buildCate(){
+        // 一级分类
+        var  v_cate1List= buildCateChild(0);
+        for (let v_cate1 of v_cate1List) {
+            v_html+=' <div class="item">\n' +
+                    '<h3><a href="">'+v_cate1.cateName+'</a></h3>\n' +
+                    '<div class="item-list clearfix">\n' +
+                    '<div class="subitem">';
+            // 二级分类
+            var  v_cate2List= buildCateChild(v_cate1.id);
+            for (let v_cate2 of v_cate2List) {
+                v_html+='<dl class="fore1">\n' +
+                        '<dt><a href="">'+v_cate2.cateName+'</a></dt>\n' +
+                        '<dd>'
+                // 三级分类
+                var  v_cate3List= buildCateChild(v_cate2.id);
+                for (let v_cate3 of v_cate3List){
+                    v_html+='<em><a href="">'+v_cate3.cateName+'</a></em>';
+                }
+                v_html+='</dd></dl>'
+            }
+            v_html+='</div></div></div>';
+        }
+    }
+    function buildCateChild(id){
+        var childArr=[];
+        for (let v_cate of v_cateList){
+            if (id==v_cate.pid){
+                childArr.push(v_cate);
+            }
+       }
+           return childArr;
+    }
+    function initCss() {
+        $('.all-sort-list2 > .item').hover(function() {
+            //父类分类列表容器的高度
+            $(this).addClass('hover');
+            $(this).children('.item-list').css('display', 'block');
+        }, function() {
+            $(this).removeClass('hover');
+            $(this).children('.item-list').css('display', 'none');
+        });
+
+        $('.item > .item-list > .close').click(function() {
+            $(this).parent().parent().removeClass('hover');
+            $(this).parent().hide();
+        });
+    }
+</script>
+</body>
+</html>

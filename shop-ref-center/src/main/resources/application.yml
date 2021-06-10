@@ -1,0 +1,13 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: eureka-server
+eureka:
+  instance:
+    hostname: localhost #指定主机地址
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:4000/eureka/ #注册到另一个Eureka注册中心
+    fetch-registry: true #指定是否要从注册中心获取服务（注册中心不需要开启）
+    register-with-eureka: true
